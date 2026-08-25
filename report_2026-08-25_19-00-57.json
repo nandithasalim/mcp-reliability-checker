@@ -1,0 +1,94 @@
+[
+  {
+    "label": "DuckDuckGo Search",
+    "results": [
+      {
+        "name": "Normal call",
+        "crashed": false,
+        "is_error": false,
+        "content_preview": "searchOutput(result=\"Found 10 search results:\\n\\n1. What is the Model Context Protocol (MCP)?\\n   URL: https://modelcontextprotocol.io/docs/2026-07-28"
+      },
+      {
+        "name": "Empty input",
+        "crashed": false,
+        "is_error": false,
+        "content_preview": "searchOutput(result=\"No results were found for your search query. This could be due to DuckDuckGo's bot detection or the query returned no matches. Pl"
+      },
+      {
+        "name": "Garbage input",
+        "crashed": false,
+        "is_error": false,
+        "content_preview": "searchOutput(result=\"Found 10 search results:\\n\\n1. IzskzjKzjzkzjzzjzkzkzjzkjzz!kzjzlzjz\u00f1ll,lk,j,k,km,l ... - YouTube\\n   URL: https://www.youtube.com"
+      }
+    ]
+  },
+  {
+    "label": "Fetch (web page reader)",
+    "results": [
+      {
+        "name": "Normal call",
+        "crashed": false,
+        "is_error": false,
+        "content_preview": "None"
+      },
+      {
+        "name": "Empty input",
+        "crashed": true,
+        "is_error": null,
+        "content_preview": "Input validation error: '' should be non-empty"
+      },
+      {
+        "name": "Garbage input",
+        "crashed": true,
+        "is_error": null,
+        "content_preview": "1 validation error for Fetch\nurl\n  Input should be a valid URL, relative URL without a base [type=url_parsing, input_value='not-a-real-url-at-all', in"
+      }
+    ]
+  },
+  {
+    "label": "Everything (MCP reference test server)",
+    "results": [
+      {
+        "name": "Normal call",
+        "crashed": false,
+        "is_error": false,
+        "content_preview": "None"
+      },
+      {
+        "name": "Empty input",
+        "crashed": false,
+        "is_error": false,
+        "content_preview": "None"
+      },
+      {
+        "name": "Wrong type",
+        "crashed": true,
+        "is_error": null,
+        "content_preview": "MCP error -32602: Input validation error: Invalid arguments for tool echo: Invalid input: expected string, received number at message"
+      }
+    ]
+  },
+  {
+    "label": "Time",
+    "results": [
+      {
+        "name": "Normal call",
+        "crashed": false,
+        "is_error": false,
+        "content_preview": "None"
+      },
+      {
+        "name": "Invalid timezone",
+        "crashed": true,
+        "is_error": null,
+        "content_preview": "Error processing mcp-server-time query: Invalid timezone: 'No time zone found with key Not/ARealZone'"
+      },
+      {
+        "name": "Empty input",
+        "crashed": true,
+        "is_error": null,
+        "content_preview": "Error processing mcp-server-time query: Missing required argument: timezone"
+      }
+    ]
+  }
+]

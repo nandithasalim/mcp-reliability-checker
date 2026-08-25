@@ -1,0 +1,98 @@
+{
+  "servers": [
+    {
+      "label": "DuckDuckGo Search",
+      "connection_failed": "Connection closed"
+    },
+    {
+      "label": "Fetch (web page reader)",
+      "connection_failed": "Connection closed"
+    },
+    {
+      "label": "Everything (MCP reference test server)",
+      "results": [
+        {
+          "name": "Normal call",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "[TextContent(type='text', text='Echo: hello', annotations=None, meta=None)]"
+        },
+        {
+          "name": "Empty input",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "[TextContent(type='text', text='Echo: ', annotations=None, meta=None)]"
+        },
+        {
+          "name": "Wrong type",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "MCP error -32602: Input validation error: Invalid arguments for tool echo: Invalid input: expected string, received number at message"
+        }
+      ]
+    },
+    {
+      "label": "Time",
+      "connection_failed": "Connection closed"
+    },
+    {
+      "label": "Filesystem",
+      "connection_failed": "Connection closed"
+    },
+    {
+      "label": "Memory",
+      "results": [
+        {
+          "name": "Normal call",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "Root(entities=[Root(name='Test', entityType='person', observations=['likes testing'])])"
+        },
+        {
+          "name": "Empty input",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "Root(entities=[])"
+        },
+        {
+          "name": "Wrong type",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "MCP error -32602: Input validation error: Invalid arguments for tool create_entities: Invalid input: expected array, received string at entities"
+        }
+      ]
+    }
+  ],
+  "leaderboard": [
+    [
+      "Everything (MCP reference test server)",
+      2,
+      3
+    ],
+    [
+      "Memory",
+      2,
+      3
+    ],
+    [
+      "DuckDuckGo Search",
+      0,
+      0
+    ],
+    [
+      "Fetch (web page reader)",
+      0,
+      0
+    ],
+    [
+      "Time",
+      0,
+      0
+    ],
+    [
+      "Filesystem",
+      0,
+      0
+    ]
+  ]
+}
