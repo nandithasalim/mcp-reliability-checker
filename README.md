@@ -46,19 +46,6 @@ open report.html
 
 Requires `uv`/`uvx` and Node.js (`npx`) installed, since tested servers are launched through those.
 
-## Adding a new server to test
-
-Add an entry to the `SERVERS` list in `eval_runner.py`:
-```python
-{
-    "label": "My Server",
-    "config": {"mcpServers": {"myserver": {"command": "uvx", "args": ["my-mcp-package"]}}},
-    "tests": [
-        {"name": "Normal call", "tool": "my_tool", "args": {...}, "input_type": "valid"},
-        {"name": "Bad input", "tool": "my_tool", "args": {...}, "input_type": "invalid"},
-    ],
-},
-```
 
 ## What's next
 
@@ -66,3 +53,17 @@ Add an entry to the `SERVERS` list in `eval_runner.py`:
 - File upstream bug reports for the SQLite/MediaWiki failures found above
 - Expand test categories: latency/timeout checks, concurrent-load testing
 	
+## Adding a new server to test
+
+Add an entry to `servers.json` — no code changes needed:
+```json
+{
+    "label": "My Server",
+    "config": {"mcpServers": {"myserver": {"command": "uvx", "args": ["my-mcp-package"]}}},
+    "tests": [
+        {"name": "Normal call", "tool": "my_tool", "args": {"key": "value"}, "input_type": "valid"},
+        {"name": "Bad input", "tool": "my_tool", "args": {"key": ""}, "input_type": "invalid"}
+    ]
+}
+```
+Then run `python3 eval_runner.py` — it'll pick it up automatically.

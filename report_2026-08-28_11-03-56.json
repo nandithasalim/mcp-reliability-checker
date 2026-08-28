@@ -1,0 +1,374 @@
+{
+  "servers": [
+    {
+      "label": "DuckDuckGo Search",
+      "results": [
+        {
+          "name": "Normal call",
+          "input_type": "valid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "searchOutput(result=\"Found 10 search results:\\n\\n1. What is the Model Context Protocol (MCP)?\\n   URL: https://modelcontextprotocol.io/docs/2026-07-28"
+        },
+        {
+          "name": "Empty input",
+          "input_type": "invalid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "searchOutput(result=\"No results were found for your search query. This could be due to DuckDuckGo's bot detection or the query returned no matches. Pl"
+        },
+        {
+          "name": "Garbage input",
+          "input_type": "invalid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "searchOutput(result='Found 10 search results:\\n\\n1. 123 GO! - YouTube\\n   URL: https://www.youtube.com/channel/UCBXNpF6k2n8dsI6nBH8q4sQ\\n   Summary: U"
+        }
+      ]
+    },
+    {
+      "label": "Fetch (web page reader)",
+      "results": [
+        {
+          "name": "Normal call",
+          "input_type": "valid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "[TextContent(type='text', text='Contents of https://example.com/:\\nThis domain is for use in documentation examples without needing permission. Avoid "
+        },
+        {
+          "name": "Empty input",
+          "input_type": "invalid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "Input validation error: '' should be non-empty"
+        },
+        {
+          "name": "Garbage input",
+          "input_type": "invalid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "1 validation error for Fetch\nurl\n  Input should be a valid URL, relative URL without a base [type=url_parsing, input_value='not-a-real-url-at-all', in"
+        }
+      ]
+    },
+    {
+      "label": "Everything (MCP reference test server)",
+      "results": [
+        {
+          "name": "Normal call",
+          "input_type": "valid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "[TextContent(type='text', text='Echo: hello', annotations=None, meta=None)]"
+        },
+        {
+          "name": "Empty input",
+          "input_type": "invalid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "[TextContent(type='text', text='Echo: ', annotations=None, meta=None)]"
+        },
+        {
+          "name": "Wrong type",
+          "input_type": "invalid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "MCP error -32602: Input validation error: Invalid arguments for tool echo: Invalid input: expected string, received number at message"
+        }
+      ]
+    },
+    {
+      "label": "Time",
+      "results": [
+        {
+          "name": "Normal call",
+          "input_type": "valid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "[TextContent(type='text', text='{\\n  \"timezone\": \"Asia/Kolkata\",\\n  \"datetime\": \"2026-08-28T11:03:53+05:30\",\\n  \"day_of_week\": \"Friday\",\\n  \"is_dst\": "
+        },
+        {
+          "name": "Invalid timezone",
+          "input_type": "invalid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "Error processing mcp-server-time query: Invalid timezone: 'No time zone found with key Not/ARealZone'"
+        },
+        {
+          "name": "Empty input",
+          "input_type": "invalid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "Error processing mcp-server-time query: Missing required argument: timezone"
+        }
+      ]
+    },
+    {
+      "label": "Filesystem",
+      "results": [
+        {
+          "name": "Normal call",
+          "input_type": "valid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "Root(content='[FILE] .s.PGSQL.5432\\n[FILE] .s.PGSQL.5432.lock\\n[FILE] WindowServer.external.winfo.plist\\n[DIR] cc-socks\\n[DIR] claude-501\\n[DIR] claud"
+        },
+        {
+          "name": "Nonexistent path",
+          "input_type": "invalid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "ENOENT: no such file or directory, scandir '/tmp/this_folder_does_not_exist_xyz'"
+        },
+        {
+          "name": "Empty input",
+          "input_type": "invalid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "Root(content='[FILE] .s.PGSQL.5432\\n[FILE] .s.PGSQL.5432.lock\\n[FILE] WindowServer.external.winfo.plist\\n[DIR] cc-socks\\n[DIR] claude-501\\n[DIR] claud"
+        }
+      ]
+    },
+    {
+      "label": "Memory",
+      "results": [
+        {
+          "name": "Normal call",
+          "input_type": "valid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "Root(entities=[])"
+        },
+        {
+          "name": "Empty input",
+          "input_type": "invalid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "Root(entities=[])"
+        },
+        {
+          "name": "Wrong type",
+          "input_type": "invalid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "MCP error -32602: Input validation error: Invalid arguments for tool create_entities: Invalid input: expected array, received string at entities"
+        }
+      ]
+    },
+    {
+      "label": "Wikipedia",
+      "connection_failed": "Client failed to connect: [Errno 2] No such file or directory: 'wikipedia-mcp'"
+    },
+    {
+      "label": "Sequential Thinking",
+      "results": [
+        {
+          "name": "Normal call",
+          "input_type": "valid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "Root(thoughtNumber=1.0, totalThoughts=1.0, nextThoughtNeeded=False, branches=[], thoughtHistoryLength=1.0)"
+        },
+        {
+          "name": "Empty thought",
+          "input_type": "invalid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "Root(thoughtNumber=1.0, totalThoughts=1.0, nextThoughtNeeded=False, branches=[], thoughtHistoryLength=2.0)"
+        },
+        {
+          "name": "Wrong type",
+          "input_type": "invalid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "MCP error -32602: Input validation error: Invalid arguments for tool sequentialthinking: Invalid input: expected number, received NaN at thoughtNumber"
+        }
+      ]
+    },
+    {
+      "label": "Arxiv Search",
+      "results": [
+        {
+          "name": "Normal call",
+          "input_type": "valid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "[TextContent(type='text', text='{\\n  \"returned\": 5,\\n  \"start\": 0,\\n  \"abstract_mode\": \"snippet\",\\n  \"papers\": [\\n    {\\n      \"id\": \"1107.3625\",\\n   "
+        },
+        {
+          "name": "Empty query",
+          "input_type": "invalid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "{\n  \"status\": \"error\",\n  \"message\": \"No search criteria provided\"\n}"
+        },
+        {
+          "name": "Wrong type",
+          "input_type": "invalid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "Input validation error: 12345 is not of type 'string'"
+        }
+      ]
+    },
+    {
+      "label": "Git",
+      "results": [
+        {
+          "name": "Normal call",
+          "input_type": "valid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "[TextContent(type='text', text=\"Repository status:\\nOn branch main\\nYour branch is up to date with 'origin/main'.\\n\\nnothing to commit, working tree c"
+        },
+        {
+          "name": "Bad path",
+          "input_type": "invalid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "Repository path '/nonexistent/path/xyz' is outside the allowed repository '.'"
+        },
+        {
+          "name": "Empty input",
+          "input_type": "invalid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "[TextContent(type='text', text=\"Repository status:\\nOn branch main\\nYour branch is up to date with 'origin/main'.\\n\\nnothing to commit, working tree c"
+        }
+      ]
+    },
+    {
+      "label": "SQLite",
+      "connection_failed": "Connection closed"
+    },
+    {
+      "label": "Puppeteer",
+      "results": [
+        {
+          "name": "Normal call",
+          "input_type": "valid",
+          "crashed": false,
+          "is_error": false,
+          "content_preview": "[TextContent(type='text', text='Navigated to https://example.com', annotations=None, meta=None)]"
+        },
+        {
+          "name": "Bad URL",
+          "input_type": "invalid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+        },
+        {
+          "name": "Empty input",
+          "input_type": "invalid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+        }
+      ]
+    },
+    {
+      "label": "Context7",
+      "results": [
+        {
+          "name": "Normal call",
+          "input_type": "valid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "Input validation error: Invalid arguments for tool resolve-library-id: query: Invalid input: expected string, received undefined"
+        },
+        {
+          "name": "Empty input",
+          "input_type": "invalid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "Input validation error: Invalid arguments for tool resolve-library-id: query: Invalid input: expected string, received undefined"
+        },
+        {
+          "name": "Wrong type",
+          "input_type": "invalid",
+          "crashed": true,
+          "is_error": null,
+          "content_preview": "Input validation error: Invalid arguments for tool resolve-library-id: query: Invalid input: expected string, received undefined, libraryName: Invalid"
+        }
+      ]
+    },
+    {
+      "label": "MediaWiki",
+      "connection_failed": "Connection closed"
+    }
+  ],
+  "leaderboard": [
+    [
+      "Fetch (web page reader)",
+      4,
+      6
+    ],
+    [
+      "Time",
+      4,
+      6
+    ],
+    [
+      "Arxiv Search",
+      4,
+      6
+    ],
+    [
+      "Puppeteer",
+      4,
+      6
+    ],
+    [
+      "Everything (MCP reference test server)",
+      3,
+      6
+    ],
+    [
+      "Filesystem",
+      3,
+      6
+    ],
+    [
+      "Memory",
+      3,
+      6
+    ],
+    [
+      "Sequential Thinking",
+      3,
+      6
+    ],
+    [
+      "Git",
+      3,
+      6
+    ],
+    [
+      "DuckDuckGo Search",
+      2,
+      6
+    ],
+    [
+      "Context7",
+      2,
+      6
+    ],
+    [
+      "Wikipedia",
+      0,
+      0
+    ],
+    [
+      "SQLite",
+      0,
+      0
+    ],
+    [
+      "MediaWiki",
+      0,
+      0
+    ]
+  ]
+}
