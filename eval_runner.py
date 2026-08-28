@@ -58,6 +58,78 @@ SERVERS = [
             {"name": "Wrong type", "tool": "create_entities", "args": {"entities": "not_a_list"}, "input_type": "invalid"},
         ],
     },
+    {
+        "label": "Wikipedia",
+        "config": {"mcpServers": {"wikipedia": {"command": "wikipedia-mcp", "args": []}}},
+        "tests": [
+            {"name": "Normal call", "tool": "search_wikipedia", "args": {"query": "Python programming"}, "input_type": "valid"},
+            {"name": "Empty query", "tool": "search_wikipedia", "args": {"query": ""}, "input_type": "invalid"},
+            {"name": "Wrong type", "tool": "search_wikipedia", "args": {"query": 12345}, "input_type": "invalid"},
+        ],
+    },
+    {
+        "label": "Sequential Thinking",
+        "config": {"mcpServers": {"seq": {"command": "npx", "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]}}},
+        "tests": [
+            {"name": "Normal call", "tool": "sequentialthinking", "args": {"thought": "Testing this tool", "thoughtNumber": 1, "totalThoughts": 1, "nextThoughtNeeded": False}, "input_type": "valid"},
+            {"name": "Empty thought", "tool": "sequentialthinking", "args": {"thought": "", "thoughtNumber": 1, "totalThoughts": 1, "nextThoughtNeeded": False}, "input_type": "invalid"},
+            {"name": "Wrong type", "tool": "sequentialthinking", "args": {"thought": "test", "thoughtNumber": "not_a_number", "totalThoughts": 1, "nextThoughtNeeded": False}, "input_type": "invalid"},
+        ],
+    },
+    {
+        "label": "Arxiv Search",
+        "config": {"mcpServers": {"arxiv": {"command": "uvx", "args": ["arxiv-mcp-server"]}}},
+        "tests": [
+            {"name": "Normal call", "tool": "search_papers", "args": {"query": "transformers"}, "input_type": "valid"},
+            {"name": "Empty query", "tool": "search_papers", "args": {"query": ""}, "input_type": "invalid"},
+            {"name": "Wrong type", "tool": "search_papers", "args": {"query": 12345}, "input_type": "invalid"},
+        ],
+    },
+    {
+        "label": "Git",
+        "config": {"mcpServers": {"git": {"command": "uvx", "args": ["mcp-server-git", "--repository", "."]}}},
+        "tests": [
+            {"name": "Normal call", "tool": "git_status", "args": {"repo_path": "."}, "input_type": "valid"},
+            {"name": "Bad path", "tool": "git_status", "args": {"repo_path": "/nonexistent/path/xyz"}, "input_type": "invalid"},
+            {"name": "Empty input", "tool": "git_status", "args": {"repo_path": ""}, "input_type": "invalid"},
+        ],
+    },
+    {
+        "label": "SQLite",
+        "config": {"mcpServers": {"sqlite": {"command": "uvx", "args": ["mcp-server-sqlite", "--db-path", "/tmp/test_reliability.db"]}}},
+        "tests": [
+            {"name": "Normal call", "tool": "list_tables", "args": {}, "input_type": "valid"},
+            {"name": "Bad query", "tool": "read_query", "args": {"query": "SELECT * FROM nonexistent_table_xyz"}, "input_type": "invalid"},
+            {"name": "Wrong type", "tool": "read_query", "args": {"query": 12345}, "input_type": "invalid"},
+        ],
+    },
+    {
+        "label": "Puppeteer",
+        "config": {"mcpServers": {"puppeteer": {"command": "npx", "args": ["-y", "@modelcontextprotocol/server-puppeteer"]}}},
+        "tests": [
+            {"name": "Normal call", "tool": "puppeteer_navigate", "args": {"url": "https://example.com"}, "input_type": "valid"},
+            {"name": "Bad URL", "tool": "puppeteer_navigate", "args": {"url": "not-a-real-url"}, "input_type": "invalid"},
+            {"name": "Empty input", "tool": "puppeteer_navigate", "args": {"url": ""}, "input_type": "invalid"},
+        ],
+    },
+    {
+        "label": "Context7",
+        "config": {"mcpServers": {"context7": {"command": "npx", "args": ["-y", "@upstash/context7-mcp"]}}},
+        "tests": [
+            {"name": "Normal call", "tool": "resolve-library-id", "args": {"libraryName": "react"}, "input_type": "valid"},
+            {"name": "Empty input", "tool": "resolve-library-id", "args": {"libraryName": ""}, "input_type": "invalid"},
+            {"name": "Wrong type", "tool": "resolve-library-id", "args": {"libraryName": 12345}, "input_type": "invalid"},
+        ],
+    },
+    {
+        "label": "MediaWiki",
+        "config": {"mcpServers": {"mediawiki": {"command": "uvx", "args": ["mediawiki-mcp-server"]}}},
+        "tests": [
+            {"name": "Normal call", "tool": "search_wiki", "args": {"query": "Python"}, "input_type": "valid"},
+            {"name": "Empty input", "tool": "search_wiki", "args": {"query": ""}, "input_type": "invalid"},
+            {"name": "Wrong type", "tool": "search_wiki", "args": {"query": 12345}, "input_type": "invalid"},
+        ],
+    },
 ]
 
 async def run_single_test(client, test):
@@ -92,9 +164,7 @@ def classify_result(r):
         else:
             return "worst"
     else:
-        if r["crashed"]:
-            return "worst"
-        elif r["is_error"] is True:
+        if r["crashed"] or r["is_error"] is True:
             return "worst"
         else:
             return "correct"
